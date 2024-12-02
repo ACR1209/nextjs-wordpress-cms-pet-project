@@ -10,18 +10,22 @@ import {
 } from "@/components/ui/card";
 import Link from "next/link";
 import { BLOG_PAGE } from "@/lib/routes";
+import TimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
+
+TimeAgo.addDefaultLocale(en)
+
 
 function BlogPostItem({ post }: { post: BlogPost }) {
+  const timeAgo = new TimeAgo('en-US')
+
   return (
     <Link href={`${BLOG_PAGE}/${post.slug}`} className="h-full">
       <Card className="h-full">
         <CardHeader>
           <CardTitle>{post.title}</CardTitle>
-          <CardDescription>{post.date}</CardDescription>
+          <CardDescription>{timeAgo.format(new Date(post.date))}</CardDescription>
         </CardHeader>
-        <CardContent className="mt-auto">
-          <p>{post.content}</p>
-        </CardContent>
       </Card>
     </Link>
   );
