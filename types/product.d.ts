@@ -6,3 +6,16 @@ export interface Product {
     image: string;
     slug: string;
 } 
+
+export interface WPProduct {
+    id: number;
+    title: {
+        rendered: string;
+    };
+    slug: string;
+    acf: {
+        price: number;
+        summary: string;
+        main_image: string;
+    };
+}

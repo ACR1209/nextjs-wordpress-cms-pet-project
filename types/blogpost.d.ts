@@ -10,3 +10,12 @@ export interface BlogPost {
 export interface BlogPostPage extends Page {
     date: string;
 }
+
+export interface WPBlogPost {
+    id: string;
+    title: {
+        rendered: string;
+    };
+    slug: string;
+    date: string;
+}

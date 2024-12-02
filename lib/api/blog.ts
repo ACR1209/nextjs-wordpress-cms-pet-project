@@ -1,4 +1,4 @@
-import { BlogPost, BlogPostPage } from "@/types/blogpost";
+import { BlogPost, BlogPostPage, WPBlogPost } from "@/types/blogpost";
 import wpApiClient from "../requests";
 
 
@@ -6,12 +6,12 @@ export async function getBlogPage(slug: string) {
     try {
         const response = await wpApiClient.get<BlogPostPage[]>(`/wp/v2/posts?slug=${slug}&_fields=id,slug,title,content,date`);
         return response.data[0];
-    } catch (error) {
+    } catch {
         return null;
     }
 }
 
-function parseBlogPost(blogPost: any): BlogPost {
+function parseBlogPost(blogPost: WPBlogPost): BlogPost {
     return {
         id: blogPost.id,
         title: blogPost.title.rendered,
@@ -22,9 +22,9 @@ function parseBlogPost(blogPost: any): BlogPost {
     
 export async function getBlogs() {
     try {
-        const response = await wpApiClient.get<BlogPostPage[]>("/wp/v2/posts?_fields=id,slug,title,date");
+        const response = await wpApiClient.get<WPBlogPost[]>("/wp/v2/posts?_fields=id,slug,title,date");
         return response.data.map(parseBlogPost);
-    } catch (error) {
+    } catch {
         return [];
     }
 }

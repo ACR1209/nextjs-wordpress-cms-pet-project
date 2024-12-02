@@ -40,6 +40,7 @@ function ContactForm() {
 
   function onSubmit(values: z.infer<typeof contactFormSchema>) {
 
+    setSending(true);
     postContactForm(values)
       .then((response) => {
         if (response) {
@@ -58,7 +59,9 @@ function ContactForm() {
           }, 5000);
         }
       }
-      )
+      ).finally(() => {
+        setSending(false);
+      });
   }
 
   return (
@@ -139,7 +142,9 @@ function ContactForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">Send</Button>
+        <Button type="submit" className="w-full" disabled={sending}>
+          {sending ? "Sending..." : "Send"}
+        </Button>
      
       </form>
     </Form>

@@ -1,5 +1,6 @@
 "use server";
 import { getProduct } from "@/lib/api/products";
+import Image from "next/image";
 import React from "react";
 
 async function ProductInspectPage({ params }: { params: { slug: string } }) {
@@ -16,7 +17,9 @@ async function ProductInspectPage({ params }: { params: { slug: string } }) {
   return (
     <div className="flex flex-col md:flex-row w-full h-full gap-5">
       <div className="md:w-1/2">
-        <img
+        <Image
+          height={1200}
+          width={1200}
           src={product.image}
           alt={product.name}
           className="object-cover w-full h-full"
