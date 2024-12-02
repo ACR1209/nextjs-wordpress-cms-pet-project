@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -15,8 +15,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "../ui/textarea";
+import { postContactForm } from "@/lib/api/contact";
 
-const contactFormSchema = z.object({
+export const contactFormSchema = z.object({
   name: z.string().min(2).max(255),
   email: z.string().email(),
   message: z.string().min(10).max(1000),
@@ -24,6 +25,10 @@ const contactFormSchema = z.object({
 });
 
 function ContactForm() {
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string>()
+  const [success, setSuccess] = useState(false);
+
   const form = useForm<z.infer<typeof contactFormSchema>>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
@@ -35,11 +40,47 @@ function ContactForm() {
   });
 
   function onSubmit(values: z.infer<typeof contactFormSchema>) {
-    console.log(values);
+
+    postContactForm(values)
+      .then((response) => {
+        if (response) {
+          setError(undefined);
+          setSuccess(true);
+          form.reset();
+
+          setTimeout(() => {
+            setSuccess(false);
+          }, 5000);
+        } else {
+          setError("An error occurred while sending the message.");
+
+          setTimeout(() => {
+            setError(undefined);
+          }, 5000);
+        }
+      }
+      )
   }
 
   return (
     <Form {...form}>
+      {
+        error && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative text-sm my-5" role="alert">
+            <strong className="font-bold">Error!</strong>
+            <span className="block">{error}</span>
+          </div>
+        )
+      }
+
+      {
+        success && (
+          <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative text-sm my-5" role="alert">
+            <strong className="font-bold">Success!</strong>
+            <span className="block">Message sent successfully.</span>
+          </div>
+        )
+      }
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
@@ -100,6 +141,7 @@ function ContactForm() {
           )}
         />
         <Button type="submit" className="w-full">Send</Button>
+     
       </form>
     </Form>
   );
