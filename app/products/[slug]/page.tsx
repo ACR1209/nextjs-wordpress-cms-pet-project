@@ -1,9 +1,9 @@
 "use server";
-import products from "@/lib/products-placeholders";
+import { getProduct } from "@/lib/api/products";
 import React from "react";
 
-function ProductInspectPage({ params }: { params: { slug: string } }) {
-  const product = products.find((product) => product.slug === params.slug);
+async function ProductInspectPage({ params }: { params: { slug: string } }) {
+  const product = await getProduct(params.slug);
 
   if (!product) {
     return (

@@ -30,7 +30,7 @@ function ProductItem({ product }: { product: Product }) {
           </div>
         </CardHeader>
         <CardContent>
-          <p>{product.description}</p>
+          <p className="line-clamp-3">{product.description}</p>
         </CardContent>
       </Card>
     </Link>

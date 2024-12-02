@@ -7,6 +7,11 @@ const nextConfig = {
                 hostname: 'via.placeholder.com',
                 port: '',
                 pathname: '/1200',
+            },
+            {
+                protocol: 'http',
+                hostname: 'localhost',
+                port: '8080',
             }
         ]
     },

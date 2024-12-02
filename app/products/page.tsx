@@ -1,8 +1,11 @@
 import ProductGrid from "@/components/products/product-grid";
-import products from "@/lib/products-placeholders";
+import { getProducts } from "@/lib/api/products";
 import React from "react";
 
-function ProductsPage() {
+async function ProductsPage() {
+
+  const products = await getProducts();
+
   return (
     <div className="flex flex-col items-center">
       <h1 className="text-3xl font-bold mb-5">Products</h1>
