@@ -2,17 +2,13 @@
 import React from "react";
 import {
   NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuIndicator,
-  NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-  NavigationMenuViewport,
 } from "@/components/ui/navigation-menu";
 import Link from "next/link";
 import {
+  ABOUT_PAGE,
   BLOG_PAGE,
   CONTACT_PAGE,
   PRODUCTS_PAGE,
@@ -27,6 +23,10 @@ const NAVBAR_ITEMS = [
   {
     title: "Products",
     href: PRODUCTS_PAGE,
+  },
+  {
+    title: "About",
+    href: ABOUT_PAGE,
   },
   {
     title: "Blog",
